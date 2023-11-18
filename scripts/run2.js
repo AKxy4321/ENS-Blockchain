@@ -1,18 +1,13 @@
+const hre = require('hardhat')
+
 const main = async () => {
-    const domainContractFactory = await hre.ethers.getContractFactory('Domains2');
-    const domainContract = await domainContractFactory.deploy();
-    await domainContract.waitForDeployment();
-    console.log("Contract deployed to:", domainContract.address);
-  };
-  
-  const runMain = async () => {
-    try {
-      await main();
-      process.exit(0);
-    } catch (error) {
-      console.log(error);
-      process.exit(1);
-    }
-  };
-  
-  runMain();
+  const domainContract = await hre.ethers.deployContract("Domains2");
+  await domainContract.waitForDeployment();
+  console.log("Contract deployed to:", domainContract.target);    // .deployContract()
+};                                                                // .waitForDeployment()
+                                                                  // .address = .target
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
+

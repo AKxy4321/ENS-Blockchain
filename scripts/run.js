@@ -1,28 +1,22 @@
+const hre = require('hardhat');
+
 const main = async () => {
-  const domainContractFactory = await hre.ethers.getContractFactory('Domains');
-  const domainContract = await domainContractFactory.deploy("ninja");
-  await domainContract.waitForDeployment(); // Wait for deployment to be mined
-  console.log("Contract deployed to:", domainContract.address);
+  const domainContract = await hre.ethers.deployContract('Domains');
+  await domainContract.waitForDeployment();
 
-  // We're passing in a second variable - value. This is the moneyyyyyyyyyy
-  let txn = await domainContract.register("mortal", { value: hre.ethers.utils.parseEther('0.1') });
+  console.log("Contract deployed to:", domainContract.target);
+
+  let txn = await domainContract.register("mortal",  {value: hre.ethers.parseEther('0.1')});
   await txn.wait();
-
+  
   const address = await domainContract.getAddress("mortal");
   console.log("Owner of domain mortal:", address);
 
-  const balance = await hre.ethers.provider.getBalance(domainContract.address);
-  console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
+  const balance = await hre.ethers.provider.getBalance(domainContract.target);
+  console.log("Contract balance:", ethers.formatEther(balance));
 }
 
-const runMain = async () => {
-  try {
-    await main();
-    process.exit(0);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-};
-
-runMain();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

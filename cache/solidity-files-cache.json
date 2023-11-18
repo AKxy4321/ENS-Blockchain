@@ -1,48 +1,6 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Misc\\Documents\\Career\\FinTech\\BlockChain\\Naming_Service\\contracts\\Domains.sol": {
-      "lastModificationDate": 1700303327149,
-      "contentHash": "51e3577d9a2d2f1443279700b59e9278",
-      "sourceName": "contracts/Domains.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        "@openzeppelin/contracts/utils/Counter.sol",
-        "./libraries/StringUtils.sol",
-        "@openzeppelin/contracts/utils/Base64.sol",
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.10"
-      ],
-      "artifacts": [
-        "Domains"
-      ]
-    },
     "C:\\Misc\\Documents\\Career\\FinTech\\BlockChain\\Naming_Service\\contracts\\libraries\\StringUtils.sol": {
       "lastModificationDate": 1700305163649,
       "contentHash": "f65e9cdea5860fcb239bcbe9e8ed9cac",
@@ -755,7 +713,7 @@
       ]
     },
     "C:\\Misc\\Documents\\Career\\FinTech\\BlockChain\\Naming_Service\\contracts\\Domains2.sol": {
-      "lastModificationDate": 1700303527940,
+      "lastModificationDate": 1700339432231,
       "contentHash": "c751ccf87c33a8ebf32a8cc975a27d5a",
       "sourceName": "contracts/Domains2.sol",
       "solcConfig": {
@@ -790,6 +748,45 @@
       ],
       "artifacts": [
         "Domains2"
+      ]
+    },
+    "C:\\Misc\\Documents\\Career\\FinTech\\BlockChain\\Naming_Service\\contracts\\Domains.sol": {
+      "lastModificationDate": 1700340430996,
+      "contentHash": "31d47ecb692e8a9d765be1648a02a668",
+      "sourceName": "contracts/Domains.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libraries/StringUtils.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.10"
+      ],
+      "artifacts": [
+        "Domains"
       ]
     }
   }
