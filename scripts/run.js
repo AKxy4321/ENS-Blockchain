@@ -1,12 +1,7 @@
 const main = async () => {
   const domainContractFactory = await hre.ethers.getContractFactory('Domains');
   const domainContract = await domainContractFactory.deploy("ninja");
-  //await domainContract.waitForDeployment(); // Wait for deployment to be mined
-
-  console.log("Contract deployed to:", domainContract.address);
-
-  console.log("Contract deployed to:", domainContract.address);
-
+  await domainContract.waitForDeployment(); // Wait for deployment to be mined
   console.log("Contract deployed to:", domainContract.address);
 
   // We're passing in a second variable - value. This is the moneyyyyyyyyyy
