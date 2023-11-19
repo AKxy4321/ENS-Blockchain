@@ -13,12 +13,42 @@ import "hardhat/console.sol";
 
 // We inherit the contract we imported. This means we'll have access
 // to the inherited contract's methods.
+
+error Unauthorized();
+error AlreadyRegistered();
+error InvalidName(string name);
+
 contract Domains is ERC721URIStorage {
+    address payable public owner;
+    string public tld = "blockchain";
+
+    constructor(
+        string memory _tld
+    ) payable ERC721("Ninja Name Service", "NNS") {
+        owner = payable(msg.sender);
+        tld = _tld;
+        console.log("%s name service deployed", _tld);
+    }
+
+    modifier onlyOwner() {
+        require(isOwner());
+        _;
+    }
+
+    function isOwner() public view returns (bool) {
+        return msg.sender == owner;
+    }
+
+    function withdraw() public onlyOwner {
+        uint amount = address(this).balance;
+
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Failed to withdraw Matic");
+    }
+
     // Magic given to us by OpenZeppelin to help us keep track of tokenIds.
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-
-    string public tld;
 
     // We'll be storing our NFT images on chain as SVGs
     string svgPartOne =
@@ -28,21 +58,29 @@ contract Domains is ERC721URIStorage {
     mapping(string => address) public domains;
     mapping(string => string) public records;
 
-    constructor(
-        string memory _tld
-    ) payable ERC721("Ninja Name Service", "NNS") {
-        tld = _tld;
-        console.log("%s name service deployed", _tld);
+    mapping(uint => string) public names;
+
+    // Add this anywhere in your contract body
+    function getAllNames() public view returns (string[] memory) {
+        console.log("Getting all names from contract");
+        string[] memory allNames = new string[](_tokenIds.current());
+        for (uint i = 0; i < _tokenIds.current(); i++) {
+            allNames[i] = names[i];
+            console.log("Name for token %d is %s", i, allNames[i]);
+        }
+
+        return allNames;
     }
 
     function register(string calldata name) public payable {
-        require(domains[name] == address(0));
+        if (domains[name] != address(0)) revert AlreadyRegistered();
+        if (!valid(name)) revert InvalidName(name);
 
         uint256 _price = price(name);
         require(msg.value >= _price, "Not enough Matic paid");
 
         // Combine the name passed into the function  with the TLD
-        string memory _name = string(abi.encodePacked(name, ".", tld));
+        string memory _name = string(abi.encodePacked(name, ".", "block"));
         // Create the SVG (image) for the NFT with the name
         string memory finalSvg = string(
             abi.encodePacked(svgPartOne, _name, svgPartTwo)
@@ -91,8 +129,13 @@ contract Domains is ERC721URIStorage {
         _safeMint(msg.sender, newRecordId);
         _setTokenURI(newRecordId, finalTokenUri);
         domains[name] = msg.sender;
+        names[newRecordId] = name;
 
         _tokenIds.increment();
+    }
+
+    function valid(string calldata name) public pure returns (bool) {
+        return StringUtils.strlen(name) >= 3 && StringUtils.strlen(name) <= 10;
     }
 
     // This function will give us the price of a domain based on length
@@ -113,8 +156,7 @@ contract Domains is ERC721URIStorage {
     }
 
     function setRecord(string calldata name, string calldata record) public {
-        // Check that the owner is the transaction sender
-        require(domains[name] == msg.sender);
+        if (msg.sender != domains[name]) revert Unauthorized();
         records[name] = record;
     }
 
