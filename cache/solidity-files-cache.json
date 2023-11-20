@@ -713,8 +713,8 @@
       ]
     },
     "C:\\Misc\\Documents\\Career\\FinTech\\BlockChain\\Naming_Service\\contracts\\Domains.sol": {
-      "lastModificationDate": 1700463574899,
-      "contentHash": "52ffec4f41d847b7841bc66bc0b6da37",
+      "lastModificationDate": 1700467587655,
+      "contentHash": "946de5292f11eb0ae548ed6373b5c4a4",
       "sourceName": "contracts/Domains.sol",
       "solcConfig": {
         "version": "0.8.20",
