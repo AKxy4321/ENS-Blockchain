@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 require("@nomicfoundation/hardhat-toolbox");
 require('@nomicfoundation/hardhat-chai-matchers');
 require('@nomicfoundation/hardhat-ethers');
@@ -8,7 +10,7 @@ module.exports = {
   networks: {
     mumbai: {
       url: process.env.STAGING_QUICKNODE_KEY,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY]
     }
   }
 };

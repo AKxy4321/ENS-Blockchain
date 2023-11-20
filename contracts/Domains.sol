@@ -24,7 +24,7 @@ contract Domains is ERC721URIStorage {
 
     constructor(
         string memory _tld
-    ) payable ERC721("Ninja Name Service", "NNS") {
+    ) payable ERC721("Block Name Service", "NNS") {
         owner = payable(msg.sender);
         tld = _tld;
         console.log("%s name service deployed", _tld);
@@ -143,11 +143,11 @@ contract Domains is ERC721URIStorage {
         uint len = StringUtils.strlen(name);
         require(len > 0);
         if (len == 3) {
-            return 5 * 10 ** 10; // 5 MATIC = 5 000 000 000 000 000 000 (18 decimals). We're going with 0.5 Matic cause the faucets don't give a lot
+            return 5 * 15 ** 10; // 5 MATIC = 5 000 000 000 000 000 000 (18 decimals). We're going with 0.5 Matic cause the faucets don't give a lot
         } else if (len == 4) {
-            return 3 * 10 ** 10; // To charge smaller amounts, reduce the decimals. This is 0.3
+            return 3 * 15 ** 10; // To charge smaller amounts, reduce the decimals. This is 0.3
         } else {
-            return 1 * 10 ** 10;
+            return 1 * 15 ** 10;
         }
     }
 
